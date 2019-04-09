@@ -41,6 +41,7 @@ class Ball:
         random.shuffle(move)
         self.x = move[0]
         self.y = move[0]
+    # 移動 球
     def draw(self):
         canvas.move(self.ball,self.x,self.y)
         self.ball_coords = canvas.coords(self.ball)
@@ -59,14 +60,23 @@ class Ball:
 class Brick:
     def __init__(self):
         x = -100
+        color = ['darkgray','gray','lightgray']
+
         # 5*3 的磚塊
         for i in range(5):
             x += 100
             y = -25
+            c = -1
             for j in range(3):
                 y += 25
-                self.brick = canvas.create_rectangle(x,y,x + 100,y + 25,fill = 'lightgray')
-
+                c += 1
+                self.brick = canvas.create_rectangle(x,y,x + 100,y + 25,fill = color[c])
+                self.brick_coords = canvas.coords(self.brick)
+    def hit_brick(self):
+        if ball.ball_coords[1] <= self.brick_coords[3]:  #撞到磚塊底部
+            ball.y = 10
+        elif ball.ball_coords[3] >= self.brick_coords[1]: #撞到磚塊頂部
+            ball.y = -10
 
 paddle = Paddle('blue') # 藍色球拍
 ball = Ball('red') # 紅色球
@@ -75,6 +85,7 @@ while True:
     if paddle.hit_space == True:
         paddle.draw()
         ball.draw()
+        brick.hit_brick()
     window.update()
     canvas.update()
     canvas.update_idletasks()
