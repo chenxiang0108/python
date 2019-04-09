@@ -4,7 +4,7 @@ import time
 window = tk.Tk()
 window.title('paddle')
 window.geometry('700x700')
-window.resizable(0,0)
+#window.resizable(0,0)
 
 # 創建畫布
 canvas = tk.Canvas(window,width = 500,height = 700,bg = 'gray')
@@ -53,12 +53,24 @@ class Ball:
         elif self.ball_coords[3] >= canvas.winfo_height():
             self.y = -10
         elif self.ball_coords[2] >= paddle.paddle_coords[0] and self.ball_coords[2] <= paddle.paddle_coords[2]:
-            if self.ball_coords[3] >= paddle.paddle_coords[1]:
+            if self.ball_coords[3] >= paddle.paddle_coords[1]: # 球的底部觸碰到球拍頂部
                 self.y = -10
+# 建立磚塊
+class Brick:
+    def __init__(self):
+        x = -100
+        # 5*3 的磚塊
+        for i in range(5):
+            x += 100
+            y = -25
+            for j in range(3):
+                y += 25
+                self.brick = canvas.create_rectangle(x,y,x + 100,y + 25,fill = 'lightgray')
+
 
 paddle = Paddle('blue') # 藍色球拍
 ball = Ball('red') # 紅色球
-
+brick = Brick()
 while True:
     if paddle.hit_space == True:
         paddle.draw()
@@ -66,6 +78,6 @@ while True:
     window.update()
     canvas.update()
     canvas.update_idletasks()
-    time.sleep(0.01)
+    time.sleep(0.02)
 
 
