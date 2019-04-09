@@ -75,8 +75,9 @@ class Brick:
     def hit_brick(self):
         if ball.ball_coords[1] <= self.brick_coords[3]:  #撞到磚塊底部
             ball.y = 10
-        elif ball.ball_coords[3] >= self.brick_coords[1]: #撞到磚塊頂部
-            ball.y = -10
+            canvas.delete(self.brick)
+        #elif ball.ball_coords[3] >= self.brick_coords[1]: #撞到磚塊頂部
+             #ball.y = -10
 
 paddle = Paddle('blue') # 藍色球拍
 ball = Ball('red') # 紅色球
